@@ -594,7 +594,7 @@ class Select extends React.Component {
 		return expandedValue ? [expandedValue] : [];
 	}
 
-	setValue (value) {
+	setValue (value, hasBeenSelected) {
 		if (this.props.autoBlur) {
 			this.blurInput();
 		}
@@ -607,7 +607,10 @@ class Select extends React.Component {
 		}
 		if (this.props.onChange) {
 			this.props.onChange(value);
-		}
+    }
+    if (this.props.onSelect && hasBeenSelected) {
+      this.props.onSelect(value);
+    }
 	}
 
 	selectValue (value) {
@@ -636,7 +639,7 @@ class Select extends React.Component {
 				isOpen: !this.props.closeOnSelect,
 				isPseudoFocused: this.state.isFocused,
 			}, () => {
-				this.setValue(value);
+				this.setValue(value, true);
 			});
 		}
 	}
@@ -1239,6 +1242,7 @@ Select.propTypes = {
 	onInputKeyDown: PropTypes.func,       // input keyDown handler: function (event) {}
 	onMenuScrollToBottom: PropTypes.func, // fires when the menu is scrolled to the bottom; can be used to paginate options
 	onOpen: PropTypes.func,               // fires when the menu is opened
+	onSelect: PropTypes.func,             // onSelect handler: function (newValue) {}
 	onSelectResetsInput: PropTypes.bool,  // whether input is cleared on select (works only for multiselect)
 	onValueClick: PropTypes.func,         // onClick handler for value labels: function (value, event) {}
 	openOnClick: PropTypes.bool,          // boolean to control opening the menu when the control is clicked
