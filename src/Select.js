@@ -594,7 +594,7 @@ class Select extends React.Component {
 		return expandedValue ? [expandedValue] : [];
 	}
 
-	setValue (value, hasBeenSelected) {
+	setValue (value, hasBeenSelected = false) {
 		if (this.props.autoBlur) {
 			this.blurInput();
 		}
